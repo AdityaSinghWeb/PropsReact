@@ -1,51 +1,95 @@
-import headImg from "./assets/react-core-concepts.png";
-import { CoreConceptData } from "./data.js";
+import { useState } from "react";
+import Header from "./components/header/Header";
+import CoreConcept from "./components/CoreConcept";
+import { CoreConceptData } from "./data";
+import TabButton from "./components/TabButton";
+import { Examples } from "./data";
 import "./App.css";
 
-const paraInput = ["Fundamental", "Crucial", "Core"];
-function paraInputSelect(max) {
-  return Math.floor(Math.random() * (max + 1));
-}
-let parValue = paraInput[paraInputSelect(2)];
-
-function Header() {
-  return (
-    <header>
-      <img src={headImg} alt="" />
-      <h1>React Essentials</h1>
-      <p>
-        {parValue} React concepts you will need for almost any app you are going
-        to build!
-      </p>
-    </header>
-  );
-}
-
-function CoreConcept({ img, title, description }) {
-  return (
-    <li>
-      <img src={img} alt="" />
-      <h2>{title}</h2>
-      <p>{description}</p>
-    </li>
-  );
-}
-
 function App() {
+  const [selectedTopic, setSelectedTopic] = useState("");
+
+  function handleSelect(buttonClicked) {
+    setSelectedTopic(buttonClicked);
+    console.log(selectedTopic);
+  }
+
   return (
-    <div>
+    <>
       <Header />
       <main>
         <section id="core-concepts">
           <ul>
-            <CoreConcept {...CoreConceptData[0]} />
-            <CoreConcept {...CoreConceptData[1]} />
-            <CoreConcept {...CoreConceptData[2]} />
-            <CoreConcept {...CoreConceptData[3]} />
+            {CoreConceptData.map((el) => (
+              <CoreConcept key={el.title} {...el} />
+            ))}
           </ul>
         </section>
       </main>
-    </div>
+      <section id="examples">
+        <h2>Examples</h2>
+        <menu>
+          <TabButton
+            isSelected={selectedTopic === "components"}
+            onSelect={() => {
+              handleSelect("components");
+            }}
+          >
+            Components
+          </TabButton>
+          <TabButton
+            isSelected={selectedTopic === "jsx"}
+            onSelect={() => {
+              handleSelect("jsx");
+            }}
+          >
+            JSX
+          </TabButton>
+          <TabButton
+            isSelected={selectedTopic === "props"}
+            onSelect={() => {
+              handleSelect("props");
+            }}
+          >
+            Props
+          </TabButton>
+          <TabButton
+            isSelected={selectedTopic === "state"}
+            onSelect={() => {
+              handleSelect("state");
+            }}
+          >
+            State
+          </TabButton>
+        </menu>
+        {!selectedTopic && (
+          <p style={{ textAlign: "center" }}>Please select a topic</p>
+        )}
+        {selectedTopic && (
+          <div id="tab-content">
+            <h3>{Examples[selectedTopic].title}</h3>
+            <p>{Examples[selectedTopic].description}</p>
+            <pre>
+              <code>{Examples[selectedTopic].code}</code>
+            </pre>
+          </div>
+        )}
+
+        {/* or use second method- */}
+
+        {/* {!selectedTopic ? (
+          <p style={{ textAlign: 'center' }}>Please select a topic</p>
+        ) : (
+          <div id="tab-content">
+            <h3>{Examples[selectedTopic].title}</h3>
+            <p>{Examples[selectedTopic].description}</p>
+            <pre>
+              <code>{Examples[selectedTopic].code}</code>
+            </pre>
+          </div>
+        )} */}
+      </section>
+    </>
   );
 }
 
