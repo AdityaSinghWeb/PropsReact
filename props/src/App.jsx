@@ -20,9 +20,9 @@ function App() {
       <main>
         <section id="core-concepts">
           <ul>
-            {CoreConceptData.map((el) => (
-              <CoreConcept key={el.title} {...el} />
-            ))}
+            {CoreConceptData.map((el) => {
+              return <CoreConcept key={el.title} {...el} />;
+            })}
           </ul>
         </section>
       </main>
