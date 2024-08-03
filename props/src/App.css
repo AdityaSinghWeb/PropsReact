@@ -72,14 +72,13 @@ main h2 {
 }
 
 #examples h2 {
-  text-align: center;
+  text-align: left;
 }
 
 #examples menu {
   margin: 1rem 0;
   padding: 0;
   display: flex;
-  justify-content: center;
   gap: 0.5rem;
   list-style: none;
 }
@@ -111,8 +110,6 @@ main h2 {
   border-radius: 6px;
   background-color: #2f1d43;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-  width: 71%;
-  margin: auto;
 }
 
 #tab-content h3 {
